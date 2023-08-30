@@ -6,4 +6,5 @@ exports.validateUserRegistration = [
     check('mobileNumber', 'Mobile Number is required').notEmpty(),
     check('email', 'Email is required').notEmpty(),
     check('password', 'Password is required').notEmpty(),
+    // Image is not mandatory
 ]; 
