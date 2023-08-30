@@ -20,14 +20,18 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const url = "https://fragile-sneakers-bee.cyclic.app/";
-            const {data:res} = await axios.post(url, data);
-            localStorage.setItem("token", res.data);
-            window.location = "/"
+            const url = "https://fragile-sneakers-bee.cyclic.app/api/users/login";
+            const response = await axios.post(url, data);
+
+            const token = response.data.token;
+            localStorage.setItem('authToken', token);
+            alert(response.data.message);
+
+            window.location.href = "/"
 
         } catch (error) {
             console.error(error);
-            setError(error.response.data.message);
+            alert(error.response.data.message);
         }
     }
 
