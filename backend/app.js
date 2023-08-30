@@ -1,4 +1,8 @@
 const express = require('express');
+const dbConnection = require('./config/db')
+
+// Connecting to the Mongodb database
+dbConnection();
 
 const app = express();
 const PORT = 3000;
