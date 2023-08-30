@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
 const { validationResult } = require('express-validator');
-const validateUserRegistration = require('../middleware/validateUser');
+const {validateUserRegistration} = require('../middleware/validateUser');
 const errorHandler = require('../middleware/errorHandler');
 
 const router = express.Router();
@@ -32,13 +32,19 @@ router.post('/register', validateUserRegistration, async (req, res, next) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             mobileNumber: req.body.mobileNumber,
-            email: req.body.mobileNumber,
             email: req.body.email,
             password: hashedPassword,
             image: req.body.image
         });
 
+        await user.save();
+        res.send('User registered successfully!');
+
     } catch (error) {
-        
+        next (error)      // Passing the error to the error handling middleware
     }
-})
+});
+
+router.use(errorHandler);
+
+module.exports = router;
