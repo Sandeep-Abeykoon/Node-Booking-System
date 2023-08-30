@@ -20,7 +20,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const url = "https://fragile-sneakers-bee.cyclic.app/api/users/login";
+            const url = "https://fragile-sneakers-bee.cyclic.app/";
             const {data:res} = await axios.post(url, data);
             localStorage.setItem("token", res.data);
             window.location = "/"
