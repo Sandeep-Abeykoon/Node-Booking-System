@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const dbConnection = require('./config/db')
 const userRoutes = require('./routes/userRoutes');
 
@@ -6,6 +7,8 @@ const userRoutes = require('./routes/userRoutes');
 dbConnection();
 
 const app = express();
+app.use(cors());
+
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
