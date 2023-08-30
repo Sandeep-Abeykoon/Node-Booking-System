@@ -24,7 +24,7 @@ router.post('/register', validateUserRegistration, async (req, res, next) => {
         let user = await User.findOne({ email: req.body.email });
 
         if (user) {
-            return res.status(400).send('User already registered');
+            return res.status(400).json({ message: 'User already registered with this username'} );
         }
 
         // Hashing the password
@@ -42,17 +42,17 @@ router.post('/register', validateUserRegistration, async (req, res, next) => {
         });
 
         await user.save();
-        res.send('User registered successfully!');
+        res.status(201).json({ msg: 'User registered successfully!'} );
 
     } catch (error) {
-        next (error)      // Passing the error to the error handling middleware
+        next (error)   // Passing the error to the error handling middleware
     }
 });
 
 
 
 // user login route
-router.post('login', validateUserLogin, async (req, res, next) => {
+router.post('/login', validateUserLogin, async (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -65,14 +65,14 @@ router.post('login', validateUserLogin, async (req, res, next) => {
         let user = await User.findOne({ email: req.body.email });
 
         if (!user) {
-            return res.status(400).send('Invalid email or password');
+            return res.status(400).json({ message: 'Invalid email or password' });
         }
 
         // Checking the validity of the password
         const validPassword = await bcrypt.compare(req.body.password, user.password);
     
         if (!validPassword) {
-            return res.status(400).send('Invalid email or password');
+            return res.status(400).json({ message: 'Invalid email or password' });
         }
 
         // Generating the JWT
@@ -82,10 +82,13 @@ router.post('login', validateUserLogin, async (req, res, next) => {
             }
         };
 
-        const token = jwt.sign(tokenPayload, process.env.JWT_KEY);  // No token expiration specified as this is a test project
-
-        // Sending the JWT token
-        res.json({ token });
+        jwt.sign(tokenPayload, process.env.JWT_KEY, (err, token) => {
+            if (err) {
+                console.error('Error signing the token', err);
+                return res. status(500).json({ msg: 'Server error' });
+            }
+            res.status(200).json({ token, msg: "User logged in successfully!" });
+       });
 
     } catch (error) {
         next(error);
