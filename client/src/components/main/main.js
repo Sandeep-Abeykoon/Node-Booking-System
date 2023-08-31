@@ -19,9 +19,8 @@ const Main = () => {
 
                 const response = await axios.get(`https://fragile-sneakers-bee.cyclic.app/api/users/user-data`, config);
                 setUserData(response.data);
-
                 setImageName(response.data.imageName);
-
+                console.log(userData);
 
             } catch (error) {
                 console.error("Error fetching user data: ", error);
