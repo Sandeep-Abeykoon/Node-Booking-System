@@ -11,7 +11,7 @@ const Signup = () => {
         mobileNumber: "",
         email: "",
         password: "",
-        image: ""
+        image: null
     });
 
     const [error, setError] = useState("");
@@ -21,10 +21,15 @@ const Signup = () => {
         setData({ ...data, [input.name]: input.value});
     };
 
+    const handleFileChange = (e) => {
+        setData({ ...data, image: e.target.files[0] });
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
+            
             const url = "https://fragile-sneakers-bee.cyclic.app/api/users/register";
             const response = await axios.post(url, data);
             alert("User registred sucessfully");
@@ -97,12 +102,9 @@ const Signup = () => {
                         className={styles.input}
                     />
                     <input 
-                        type='text'
-                        placeholder='Image URL'
+                        type='file'
                         name='image'
-                        onChange={handleChange}
-                        value={data.image}
-                        required
+                        onChange={handleFileChange}
                         className={styles.input}
                     />
                     {error && <div className={styles.error_msg}>{error}</div>}
