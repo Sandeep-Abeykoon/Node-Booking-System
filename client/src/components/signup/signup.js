@@ -11,7 +11,7 @@ const Signup = () => {
         mobileNumber: "",
         email: "",
         password: "",
-        imageUrl: ""
+        imageName: ""
     });
 
     const[image, setImage] = useState(null);
@@ -44,8 +44,10 @@ const Signup = () => {
                     });
 
                     // Setting the image url after getting the predefined url
-                    userData.imageUrl = presignedUrlResponse.data.imageUrl;
-
+                    const imageUrlArray = presignedUrlResponse.data.imageUrl.split('/');
+                    const _imageName = imageUrlArray[imageUrlArray.length - 1];
+                    setUserData(prevState => ({ ...prevState, imageName: _imageName }));
+                    
                 } else {
                     setError("Failed to upload image. Please try again later.")
                 }

@@ -28,7 +28,7 @@ const userSchema = new Schema({
         required: true
     },
 
-    image: {
+    imageName: {
         type: String
         // image is not mandatory
     }
