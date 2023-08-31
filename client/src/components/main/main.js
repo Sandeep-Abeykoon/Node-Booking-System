@@ -2,77 +2,48 @@ import styles from "./styles.module.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const BASE_URL = "https://fragile-sneakers-bee.cyclic.app/api";
+
 const Main = () => {
   const [userData, setUserData] = useState(null);
-  const [imageName, setImageName] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchUserDataAndImage = async () => {
       try {
-        // Setting the token to the axios request headers
         const config = {
           headers: {
             "x-auth-token": localStorage.getItem('authToken'),
           },
         };
 
-        const response = await axios.get(
-          `https://fragile-sneakers-bee.cyclic.app/api/users/user-data?userId=${localStorage.getItem("userId")}`,
+        const userResponse = await axios.get(
+          `${BASE_URL}/users/user-data?userId=${localStorage.getItem("userId")}`,
           config
         );
 
-        setUserData(response.data);
+        setUserData(userResponse.data);
 
+        if (userResponse.data?.imageName) {
+          const imageResponse = await axios.post(
+            `${BASE_URL}/files/get-image-url/`,
+            { imageName: userResponse.data.imageName }
+          );
+          setUserData(prevData => ({ ...prevData, imageUrl: imageResponse.data.presignedUrl }));
+        }
+        
       } catch (error) {
-        console.error("Error fetching user data: ", error);
+        console.error("Error fetching data: ", error);
       }
     };
 
-    fetchUserData();
-
+    fetchUserDataAndImage();
   }, []);
-
-
-  // To set the image url variable
-  useEffect(() => {
-    if (userData) {
-      setImageName(userData.imageName);
-    }
-  }, [userData]);
-
-
-  // To call the image url fetching function
-  useEffect(() => {
-    const fetchImageUrl = async (imageName) => {
-      try {
-        const response = await axios.post(
-          `https://fragile-sneakers-bee.cyclic.app/api/files/get-image-url/`,
-          { imageName }
-        );
-        const presignedUrl = response.data.presignedUrl;
-        setImageUrl(presignedUrl);
-
-      } catch (error) {
-        console.log("Error fetching image url : ", error)
-      }
-    };
-    fetchImageUrl();
-  }, [imageName]);
-
-  useEffect(() => {
-    if(imageUrl) {
-      console.log(imageUrl);
-    }
-  }, [imageUrl]);
-  
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userId");
     window.location.reload();
   };
-
 
   return (
     <div className={styles.main_container}>
@@ -83,7 +54,7 @@ const Main = () => {
         </button>
       </nav>
       <div className={styles.user_data_container}>
-        <img src="https://media.licdn.com/dms/image/C5603AQG7Ah3zXdLm-Q/profile-displayphoto-shrink_800_800/0/1647058746617?e=2147483647&v=beta&t=3JqGnN_3NPYUcBRU_JMbL9QTwahoFHYGlYdc8ke6qjE" alt="User's avatar" className={styles.user_image}/>
+        <img src={userData?.imageUrl || 'fallback_image_url_here'} alt="User's avatar" className={styles.user_image} />
         <h2 className={styles.user_heading}>{userData?.firstName} {userData?.lastName}</h2>
         <div className={styles.user_data}>
           <p><span className={styles.bold}>Mobile Number : &nbsp;</span>{userData?.mobileNumber}</p>
