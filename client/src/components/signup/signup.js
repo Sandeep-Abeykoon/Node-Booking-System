@@ -11,8 +11,10 @@ const Signup = () => {
         mobileNumber: "",
         email: "",
         password: "",
-        image: null
+        imageUrl: ""
     });
+
+    const[image, setImage] = useState(null);
 
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -22,23 +24,44 @@ const Signup = () => {
     };
 
     const handleFileChange = (e) => {
-        setData({ ...data, image: e.target.files[0] });
+        setImage( e.target.files[0] );
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            
+            if (image) {
+            // Getting the presigned url from the api
+            const presignedUrlResponse = await axios.get(
+                `https://fragile-sneakers-bee.cyclic.app/api/files/get-presigned-url?email=${data.email}&filetype=${image.type}`);
+
+                if (presignedUrlResponse.data && presignedUrlResponse.data.presignedUrl) {
+                    await axios.put(presignedUrlResponse.data.presignedUrl, image, {
+                        headers: {
+                            'Content-Type': image.type
+                        }
+                    });
+
+                    // Setting the image url after getting the predefined url
+                    setData(prevData => ({ ...prevData, imageUrl: presignedUrlResponse.data.imageUrl }));
+
+                } else {
+                    setError("Failed to upload image. Please try again later.")
+                }
+            }
+        
+                
             const url = "https://fragile-sneakers-bee.cyclic.app/api/users/register";
             const response = await axios.post(url, data);
-            alert("User registred sucessfully");
+
+            alert(response.data?.message);
             navigate("/login");
 
 
         } catch (error) {
             console.error(error);
-            setError(error.response.data.message);
+            setError(error.response?.data.message);
         }
     }
 
