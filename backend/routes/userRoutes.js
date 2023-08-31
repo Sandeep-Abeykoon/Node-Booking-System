@@ -91,7 +91,7 @@ router.post("/login", validateUserLogin, async (req, res, next) => {
         console.error("Error signing the token", err);
         return res.status(500).json({ msg: "Server error" });
       }
-      res.status(200).json({ token, message: "User logged in successfully!" });
+      res.status(200).json({ token, userId : user.id, message: "User logged in successfully!" });
     });
   } catch (error) {
     next(error);

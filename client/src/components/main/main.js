@@ -1,6 +1,16 @@
 import styles from './styles.module.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Main = () => {
+
+    const [imageUrl, setImageUrl] = useState('');
+
+    useEffect(() => {
+        const fetchImage = async => {
+            
+        }
+    })
 
     const handleLogout = () => {
         localStorage.removeItem("authToken");

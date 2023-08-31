@@ -24,7 +24,10 @@ const Login = () => {
             const response = await axios.post(url, data);
 
             const token = response.data.token;
+            const userId = response.data.userId;
+
             localStorage.setItem('authToken', token);
+            localStorage.setItem('userId', userId);
 
             window.location = "/"
 
