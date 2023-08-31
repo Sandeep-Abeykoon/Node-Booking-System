@@ -20,9 +20,9 @@ const Main = () => {
           `https://fragile-sneakers-bee.cyclic.app/api/users/user-data?userId=${localStorage.getItem("userId")}`,
           config
         );
+        console.log(response.data);
         setUserData(response.data);
         setImageName(response.data.imageName);
-        console.log(userData);
       } catch (error) {
         console.error("Error fetching user data: ", error);
       }
