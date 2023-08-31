@@ -17,7 +17,7 @@ const Main = () => {
         };
 
         const response = await axios.get(
-          `https://fragile-sneakers-bee.cyclic.app/api/users/user-data?userId=${localStorage.getItem('userId')}`,
+          `https://fragile-sneakers-bee.cyclic.app/api/users/user-data?userId=${localStorage.getItem("userId")}`,
           config
         );
         setUserData(response.data);
