@@ -102,10 +102,12 @@ router.post("/login", validateUserLogin, async (req, res, next) => {
 // Getting User Data
 router.get('/user-data', async (req, res) => {
   try {
+    console.log("im up the user")
     const user = await User.findById(req.userId).select('-_id -password');
+    console.log(user);
 
     if (!user) {
-      return res.status(400).json({ message: 'User bot found' });
+      return res.status(400).json({ message: 'User not found' });
     }
     res.json(user);
   } catch (error) {
