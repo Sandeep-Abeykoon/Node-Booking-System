@@ -25,6 +25,23 @@ router.get('/get-presigned-url', async (req, res) => {
     }
 });
 
+
+router.post('/get-image-url/', async (req, res) => {
+    const filename = req.body.imageName;
+
+    if (!filename) {
+        return res.status(400).send({ message: "Filename is required" });
+    }
+
+    try {
+        const presignedUrl = generatePresignedUrl(filename, null, 'getObject');
+        res.send({ presignedUrl });
+    } catch (error) {
+        console.error('Error generating pre-signed URL : ', error);
+        return res.status(500).send({ error: 'Internal Server Error (Failed to generate pre-signed URL)' });
+    }
+})
+
 module.exports = router;
 
 

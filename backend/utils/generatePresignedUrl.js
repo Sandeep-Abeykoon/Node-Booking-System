@@ -1,17 +1,21 @@
 require('dotenv').config();
 const s3 = require('../config/s3');
 
-const generatePresignedUrl = (filename, filetype) => {
+const generatePresignedUrl = (filename, filetype, operation = 'putObject') => {
     const bucketName = process.env.BUCKET_NAME;
+
     const s3Params = {
         Bucket: bucketName,
         Key: filename,
-        Expires: 60,
-        ContentType: filetype
+        Expires: 120,
     };
 
+    if (operation === 'putObject') {
+        s3Params.ContentType = filetype;
+    }
+
     try {
-        const presignedUrl = s3.getSignedUrl('putObject', s3Params);
+        const presignedUrl = s3.getSignedUrl(operation, s3Params);
         return  presignedUrl;
         
     } catch (error){

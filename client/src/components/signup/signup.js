@@ -3,7 +3,6 @@ import { useState } from "react";
 import styles from "./styles.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { API_BASE_URL } from "../../config/config";
 
 const Signup = () => {
   const [userData, setUserData] = useState({
@@ -35,7 +34,7 @@ const Signup = () => {
       if (image) {
         // Getting the presigned url from the api
         const presignedUrlResponse = await axios.get(
-          `${API_BASE_URL}/api/files/get-presigned-url?email=${userData.email}&filetype=${image.type}`
+          `https://fragile-sneakers-bee.cyclic.app/api/files/get-presigned-url?email=${userData.email}&filetype=${image.type}`
         );
 
         if (
@@ -55,7 +54,7 @@ const Signup = () => {
         }
       }
 
-      const url = `${API_BASE_URL}/api/users/register`;
+      const url = `https://fragile-sneakers-bee.cyclic.app/api/users/register`;
       const response = await axios.post(url, userData);
 
       alert(response.data?.message);
