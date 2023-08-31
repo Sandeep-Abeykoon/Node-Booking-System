@@ -4,8 +4,8 @@ import styles from './styles.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const Signup = () => {
-    const[data, setData] = useState({
+const Signup = async () => {
+    const[userData, setUserData] = useState({
         firstName: "",
         lastName: "",
         mobileNumber: "",
@@ -20,7 +20,7 @@ const Signup = () => {
     const navigate = useNavigate();
 
     const handleChange = ({ currentTarget: input }) => {
-        setData({ ...data, [input.name]: input.value});
+        setUserData({ ...userData, [input.name]: input.value});
     };
 
     const handleFileChange = (e) => {
@@ -34,7 +34,7 @@ const Signup = () => {
             if (image) {
             // Getting the presigned url from the api
             const presignedUrlResponse = await axios.get(
-                `https://fragile-sneakers-bee.cyclic.app/api/files/get-presigned-url?email=${data.email}&filetype=${image.type}`);
+                `https://fragile-sneakers-bee.cyclic.app/api/files/get-presigned-url?email=${userData.email}&filetype=${image.type}`);
 
                 if (presignedUrlResponse.data && presignedUrlResponse.data.presignedUrl) {
                     await axios.put(presignedUrlResponse.data.presignedUrl, image, {
@@ -44,16 +44,15 @@ const Signup = () => {
                     });
 
                     // Setting the image url after getting the predefined url
-                    setData(prevData => ({ ...prevData, imageUrl: presignedUrlResponse.data.imageUrl }));
+                    userData.imageUrl = presignedUrlResponse.data.imageUrl;
 
                 } else {
                     setError("Failed to upload image. Please try again later.")
                 }
             }
-        
-                
+           
             const url = "https://fragile-sneakers-bee.cyclic.app/api/users/register";
-            const response = await axios.post(url, data);
+            const response = await axios.post(url, userData);
 
             alert(response.data?.message);
             navigate("/login");
@@ -84,7 +83,7 @@ const Signup = () => {
                         placeholder='First Name'
                         name='firstName'
                         onChange={handleChange}
-                        value={data.firstName}
+                        value={userData.firstName}
                         required
                         className={styles.input}
                     />
@@ -93,7 +92,7 @@ const Signup = () => {
                         placeholder='last Name'
                         name='lastName'
                         onChange={handleChange}
-                        value={data.lastName}
+                        value={userData.lastName}
                         required
                         className={styles.input}
                     />
@@ -102,7 +101,7 @@ const Signup = () => {
                         placeholder='Mobile Number'
                         name='mobileNumber'
                         onChange={handleChange}
-                        value={data.mobileNumber}
+                        value={userData.mobileNumber}
                         required
                         className={styles.input}
                     />
@@ -111,7 +110,7 @@ const Signup = () => {
                         placeholder='Email'
                         name='email'
                         onChange={handleChange}
-                        value={data.email}
+                        value={userData.email}
                         required
                         className={styles.input}
                     />
@@ -120,7 +119,7 @@ const Signup = () => {
                         placeholder='Password'
                         name='password'
                         onChange={handleChange}
-                        value={data.password}
+                        value={userData.password}
                         required
                         className={styles.input}
                     />

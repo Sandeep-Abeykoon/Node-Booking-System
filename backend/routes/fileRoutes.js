@@ -28,6 +28,7 @@ router.get('/get-presigned-url', async (req, res) => {
         Key: filename,
         Expires: 60,
         ContentType: filetype,
+        ACL: 'public-read'
     };
 
     // Generating the pre-signed URL
