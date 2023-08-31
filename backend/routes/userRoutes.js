@@ -38,7 +38,7 @@ router.post('/register', validateUserRegistration, async (req, res, next) => {
             mobileNumber: req.body.mobileNumber,
             email: req.body.email,
             password: hashedPassword,
-            image: req.body.image
+            image: req.body.imageUrl
         });
 
         await user.save();

@@ -15,7 +15,7 @@ router.get('/get-presigned-url', async (req, res) => {
     }
 
     // Hashing the email
-    const hashedEmail = crypto.createhash('sha256').update(email).digest('hex');
+    const hashedEmail = crypto.createHash('sha256').update(email).digest('hex');
 
     // Forming the file name using the Hashed email and the file extension
     const fileExtension = filetype.split('/').pop();
@@ -33,7 +33,7 @@ router.get('/get-presigned-url', async (req, res) => {
     // Generating the pre-signed URL
     try {
         const presignedUrl = s3.getSignedUrl('putObject',s3Params);
-        const imageUrl = `https:${bucketName}.s3.amazonaws.com/${filename}`;
+        const imageUrl = `https://${bucketName}.s3.amazonaws.com/${filename}`;
 
         return res.send({
             presignedUrl,
