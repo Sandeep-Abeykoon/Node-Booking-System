@@ -4,10 +4,10 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const User = require("../models/User");
 
+const authenticate = require('../middleware/auth');
+
 const { validationResult } = require("express-validator");
-const {
-  validateUserRegistration,
-} = require("../middleware/validateUserRegistration");
+const {validateUserRegistration} = require("../middleware/validateUserRegistration");
 const { validateUserLogin } = require("../middleware/validateUserLogin");
 const errorHandler = require("../middleware/errorHandler");
 
@@ -95,6 +95,22 @@ router.post("/login", validateUserLogin, async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  }
+});
+
+
+// Getting User Data
+router.get('/user-data', authenticate, async (req, res, next) => {
+  try {
+    const user = await User.findById(req.userId).select('-_id -password');
+
+    if (!user) {
+      return res.status(400).json({ message: 'User bot found' });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error("Error fetching user data ", error);
+    return res.status(500).json({ message: 'Server error' });
   }
 });
 

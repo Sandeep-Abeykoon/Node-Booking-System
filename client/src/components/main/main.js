@@ -4,16 +4,35 @@ import axios from 'axios';
 
 const Main = () => {
 
-    const [imageUrl, setImageUrl] = useState('');
+    const [userData, setUserData] = useState({});
+    const [imageName, setImageName] = useState('');
 
     useEffect(() => {
-        const fetchImage = async => {
-            
+        const fetchUserData = async () => {
+            try {
+                // Setting the token to the axios request headers
+                const config = {
+                    headers: {
+                        'x-auth-token': localStorage.getItem('authToken')
+                    }
+                };
+
+                const response = await axios.get(`https://fragile-sneakers-bee.cyclic.app/api/users/user-data`, config);
+                setUserData(response.data);
+
+                setImageName(response.data.imageName);
+
+
+            } catch (error) {
+                console.error("Error fetching user data: ", error);
+            } 
         }
-    })
+        fetchUserData();
+    },[]);
 
     const handleLogout = () => {
         localStorage.removeItem("authToken");
+        localStorage.removeItem("userId");
         window.location.reload();
     }
 
