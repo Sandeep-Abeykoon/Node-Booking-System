@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Main = () => {
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(null);
   const [imageName, setImageName] = useState("");
 
   useEffect(() => {
@@ -20,7 +20,6 @@ const Main = () => {
           `https://fragile-sneakers-bee.cyclic.app/api/users/user-data?userId=${localStorage.getItem("userId")}`,
           config
         );
-        console.log(response.data);
         setUserData(response.data);
         setImageName(response.data.imageName);
       } catch (error) {
@@ -29,6 +28,12 @@ const Main = () => {
     };
     fetchUserData();
   }, []);
+
+  useEffect(() => {
+    if (userData) {
+      console.log(userData);
+    }
+  }, [userData]);
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
