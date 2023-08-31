@@ -101,9 +101,10 @@ router.post("/login", validateUserLogin, async (req, res, next) => {
 
 // Getting User Data
 router.get('/user-data', async (req, res) => {
+  console.log(req.userId)
   try {
     console.log("im up")
-    const user = await User.findById(req.userId).select('-_id -password');
+    const user = await User.findById(req.userId);
     
     if (!user) {
       return res.status(400).json({ message: 'User not found' });
