@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 module.exports = (req, res, next) => {
-    console.log("Hey I'm called");
     const token = req.header('x-auth-token');
     if (!token) {
         return (

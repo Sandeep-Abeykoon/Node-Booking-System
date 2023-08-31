@@ -100,7 +100,7 @@ router.post("/login", validateUserLogin, async (req, res, next) => {
 
 
 // Getting User Data
-router.get('/user-data', authenticate, async (req, res, next) => {
+router.get('/user-data', async (req, res) => {
   try {
     const user = await User.findById(req.userId).select('-_id -password');
 
