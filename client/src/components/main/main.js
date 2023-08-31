@@ -4,7 +4,8 @@ import axios from "axios";
 
 const Main = () => {
   const [userData, setUserData] = useState(null);
-  const [imageName, setImageName] = useState("");
+  const [imageName, setImageName] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -20,26 +21,58 @@ const Main = () => {
           `https://fragile-sneakers-bee.cyclic.app/api/users/user-data?userId=${localStorage.getItem("userId")}`,
           config
         );
+
         setUserData(response.data);
-        setImageName(response.data.imageName);
+
       } catch (error) {
         console.error("Error fetching user data: ", error);
       }
     };
+
     fetchUserData();
+
   }, []);
 
+
+  // To set the image url variable
   useEffect(() => {
     if (userData) {
-      console.log(userData);
+      setImageName(userData.imageName);
     }
   }, [userData]);
+
+
+  // To call the image url fetching function
+  useEffect(() => {
+    const fetchImageUrl = async (imageName) => {
+      try {
+        const response = await axios.post(
+          `https://fragile-sneakers-bee.cyclic.app/api/files/get-image-url/`,
+          { imageName }
+        );
+        const presignedUrl = response.data.presignedUrl;
+        setImageUrl(presignedUrl);
+
+      } catch (error) {
+        console.log("Error fetching image url : ", error)
+      }
+    };
+    fetchImageUrl();
+  }, [imageName]);
+
+  useEffect(() => {
+    if(imageUrl) {
+      console.log(imageUrl);
+    }
+  }, [imageUrl]);
+  
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userId");
     window.location.reload();
   };
+
 
   return (
     <div className={styles.main_container}>
