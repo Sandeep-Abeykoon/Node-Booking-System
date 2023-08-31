@@ -7,7 +7,7 @@ const generatePresignedUrl = (filename, filetype, operation = 'putObject') => {
     const s3Params = {
         Bucket: bucketName,
         Key: filename,
-        Expires: 120,
+        Expires: 120,    //Expiry time
     };
 
     if (operation === 'putObject') {

@@ -40,25 +40,28 @@ const Signup = () => {
         if (
           presignedUrlResponse.data &&
           presignedUrlResponse.data.presignedUrl
-        ) {
+        ) 
+        {
           await axios.put(presignedUrlResponse.data.presignedUrl, image, {
             headers: {
               "Content-Type": image.type,
             },
           });
 
-          // Setting the image url after getting the predefined url
+          // Setting the image name after getting the predefined url
           userData.imageName = presignedUrlResponse.data.filename;
         } else {
           setError("Failed to upload image. Please try again later.");
         }
       }
 
+      // Registering the user
       const url = `https://fragile-sneakers-bee.cyclic.app/api/users/register`;
       const response = await axios.post(url, userData);
 
       alert(response.data?.message);
       navigate("/login");
+
     } catch (error) {
       console.error(error);
       setError(error.response?.data.message);

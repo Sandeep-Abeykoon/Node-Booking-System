@@ -54,7 +54,7 @@ const Main = () => {
         </button>
       </nav>
       <div className={styles.user_data_container}>
-        <img src={userData?.imageUrl || 'fallback_image_url_here'} alt="User's avatar" className={styles.user_image} />
+        <img src={userData?.imageUrl} alt="User's avatar" className={styles.user_image} />
         <h2 className={styles.user_heading}>{userData?.firstName} {userData?.lastName}</h2>
         <div className={styles.user_data}>
           <p><span className={styles.bold}>Mobile Number : &nbsp;</span>{userData?.mobileNumber}</p>
