@@ -18,10 +18,7 @@ router.get('/get-presigned-url', async (req, res) => {
     try {
         const presignedUrl = generatePresignedUrl(filename, filetype);
 
-        return res.send({
-            presignedUrl,
-            imageUrl
-        });
+        return res.send({ presignedUrl, filename });
     } catch (error) {
         console.error('Error generating pre-signed URL : ', error);
         return res.status(500).send({ error: 'Internal Server Error (Failed to generate pre-signed URL)' });

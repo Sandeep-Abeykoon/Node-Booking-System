@@ -44,9 +44,7 @@ const Signup = () => {
                     });
 
                     // Setting the image url after getting the predefined url
-                    const imageUrlArray = presignedUrlResponse.data.imageUrl.split('/');
-                    const _imageName = imageUrlArray[imageUrlArray.length - 1];
-                    userData.imageName = _imageName;
+                    userData.imageName = presignedUrlResponse.data.filename;
                     
                 } else {
                     setError("Failed to upload image. Please try again later.")

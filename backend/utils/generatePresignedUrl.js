@@ -12,8 +12,8 @@ const generatePresignedUrl = (filename, filetype) => {
 
     try {
         const presignedUrl = s3.getSignedUrl('putObject', s3Params);
-        const imageUrl = `https://${bucketName}.s3.amazonaws.com/${filename}`;
-        return { presignedUrl, imageUrl };
+        return  presignedUrl;
+        
     } catch (error){
         console.error('Error generating pre-signed URL: ', error);
         throw new Error('Internal Server Error (Failed to generate pre-signed URL)');
