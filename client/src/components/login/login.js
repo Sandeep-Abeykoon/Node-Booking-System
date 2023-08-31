@@ -25,13 +25,12 @@ const Login = () => {
 
             const token = response.data.token;
             localStorage.setItem('authToken', token);
-            alert(response.data.message);
 
             window.location = "/"
 
         } catch (error) {
             console.error(error);
-            alert(error.response.data.message);
+            setError(error.response.data.message);
         }
     }
 

@@ -25,10 +25,11 @@ const Signup = () => {
         e.preventDefault();
 
         try {
-            const url = "https://fragile-sneakers-bee.cyclic.app/api/";
-            const {data:res} = await axios.post(url, data);
+            const url = "https://fragile-sneakers-bee.cyclic.app/api/users/register";
+            const response = await axios.post(url, data);
+            alert("User registred sucessfully");
             navigate("/login");
-            console.log(res.message)
+
 
         } catch (error) {
             console.error(error);
