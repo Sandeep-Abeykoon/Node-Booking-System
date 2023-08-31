@@ -12,12 +12,12 @@ const Main = () => {
         // Setting the token to the axios request headers
         const config = {
           headers: {
-            "x-auth-token": localStorage.getItem("authToken"),
+            "x-auth-token": localStorage.getItem('authToken'),
           },
         };
 
         const response = await axios.get(
-          `https://fragile-sneakers-bee.cyclic.app/api/users/user-data`,
+          `https://fragile-sneakers-bee.cyclic.app/api/users/user-data?userId${localStorage.getItem('userId')}`,
           config
         );
         setUserData(response.data);
