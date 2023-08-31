@@ -13,7 +13,6 @@ const app = express();
 app.use(cors());
 
 const PORT = process.env.PORT || 3000;
-const s3 = new AWS.S3({ region: 'eu-west-1' });
 
 app.use(express.json());
 
