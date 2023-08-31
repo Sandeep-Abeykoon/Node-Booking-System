@@ -4,7 +4,7 @@ import Signup from './components/signup/signup';
 import Login from './components/login/login';
 
 function App() {
-  const user = localStorage.getItem("token")
+  const user = localStorage.getItem("authToken")
   return (
     <Routes>
       {user && <Route path='/' element={<Main/>}/>}

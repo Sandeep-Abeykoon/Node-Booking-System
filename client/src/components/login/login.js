@@ -27,7 +27,7 @@ const Login = () => {
             localStorage.setItem('authToken', token);
             alert(response.data.message);
 
-            window.location.href = "/"
+            window.location = "/"
 
         } catch (error) {
             console.error(error);
