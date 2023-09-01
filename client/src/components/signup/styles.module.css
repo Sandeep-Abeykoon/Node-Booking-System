@@ -30,7 +30,7 @@
 }
 
 .left h1{
-    margin: 0;
+    margin: bottom 5px;
     color: white;
     font-size: 35px;
     align-self: center;
@@ -70,6 +70,77 @@
     object-fit: cover;
     border-radius: 5px;
     border: 1px solid #ccc;
+}
+
+@media screen and (max-width: 1024px) {
+    .signup_form_container {
+        width: 80%;
+    }
+
+    .left h1 {
+        font-size: 30px;
+    }
+}
+
+/* Media query for smaller screens (e.g., tablets and phones) */
+@media screen and (max-width: 768px) {
+    .signup_form_container {
+        flex-direction: column;
+        width: 90%;
+        height: auto;
+        padding: 20px 0;
+    }
+
+    .left, .right {
+        flex: none; 
+        width: 100%;
+    }
+
+    .left {
+        padding-bottom: 20px; 
+    }
+
+    .left h1 {
+        margin-bottom: 20px;
+    }
+
+    .left h1, .right h1 {
+        font-size: 24px;
+    }
+
+    .input, .green_btn, .white_btn {
+        width: 85%;
+        font-size: 14px;
+    }
+}
+
+/* Media query for very small screens (e.g., phones in portrait mode) */
+@media screen and (max-width: 480px) {
+    .signup_form_container {
+        width: 95%;
+    }
+
+    .input, .green_btn, .white_btn {
+        width: 90%;
+        font-size: 13px;
+    }
+
+    .left h1, .right h1 {
+        font-size: 20px;
+    }
+
+    .left h1 {
+        margin-bottom: 25px; 
+    }
+
+    .left {
+        padding-bottom: 30px;  
+    }
+
+    .thumbnail {
+        width: 80px;
+        height: 80px;
+    }
 }
 
 

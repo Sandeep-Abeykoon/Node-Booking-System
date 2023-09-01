@@ -44,3 +44,61 @@
 	font-size: 40px;
 	align-self: center;
 }
+
+
+/* Media query for smaller screens (e.g., tablets and phones) */
+@media screen and (max-width: 768px) {
+    .login_form_container {
+        width: 85%;
+        height: auto;
+        flex-direction: column;
+    }
+
+    .left,
+    .right {
+        flex: none;
+        width: 100%;
+    }
+
+	.right {
+        padding-bottom: 40px;
+
+    .right h1,
+    .left h1 {
+        font-size: 30px;
+        text-align: center;
+    }
+
+	.right > button {
+        margin-bottom: 30px;
+    }
+
+    .input {
+        width: 80%;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .green_btn,
+    .white_btn {
+        padding: 10px 20px;
+    }
+}
+
+/* Media query for very small screens (e.g., phones in portrait mode) */
+@media screen and (max-width: 480px) {
+    .login_form_container {
+        width: 95%;
+        padding: 20px 0;
+    }
+
+    .right h1,
+    .left h1 {
+        font-size: 24px;
+	}
+
+	.right {
+        padding-bottom: 60px; 
+    }
+}
+}

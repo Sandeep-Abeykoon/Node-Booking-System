@@ -77,3 +77,43 @@
 	transform: scale(1.05);
 	transition: all 0.3s;
 }
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+    .navbar {
+        height: 50px;
+    }
+
+    .navbar h1 {
+        font-size: 20px;
+    }
+
+    .white_btn {
+        padding: 10px 0;
+        font-size: 12px;
+        margin-right: 10px;
+    }
+
+    .user_data_container {
+        padding: 10px;
+    }
+
+    .image_container {
+        width: 150px;
+        height: 150px;
+    }
+
+    .user_image {
+        width: 140px;
+        height: 140px;
+        line-height: 150px;
+    }
+
+    .user_heading {
+        font-size: 16px;
+    }
+
+    .user_data {
+        font-size: 14px;
+    }
+}
