@@ -2,10 +2,9 @@ import React, {useState} from "react";
 import styles from "./styles.module.css";
 import "../styles.common.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { loginUser } from "../../apiCalls/loginApiCalls";
 
 const Login = () => {
-  const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -24,8 +23,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const url = `${apiUrl}/api/users/login`;
-      const response = await axios.post(url, data);
+      const response = await loginUser(data);
 
       const { token, userId } = response.data;
 
@@ -43,7 +41,6 @@ const Login = () => {
     }
 
     setLoading(false);
-
   };
 
   return (
@@ -55,7 +52,7 @@ const Login = () => {
           </div>
         }
         <div className={styles.left}>
-          <form className={styles.form_container} onSubmit={handleSubmit}>
+          <form className="form_container" onSubmit={handleSubmit}>
             <h1>Login to Your Account</h1>
 
             <input
@@ -65,7 +62,7 @@ const Login = () => {
               onChange={handleChange}
               value={data.email}
               required
-              className={styles.input}
+              className="input"
             />
             <input
               type="password"
@@ -75,10 +72,10 @@ const Login = () => {
               value={data.password}
               required
               minLength="8"
-              className={styles.input}
+              className="input"
             />
 
-            {error && <div className={styles.error_msg}>{error}</div>}
+            {error && <div className="error_msg">{error}</div>}
             <button type="submit" className="green_btn">
               Sign In
             </button>

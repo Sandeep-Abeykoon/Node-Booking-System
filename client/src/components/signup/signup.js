@@ -26,9 +26,20 @@ const Signup = () => {
   };
 
   const handleFileChange = (e) => {
-    setImage(e.target.files[0]);
-    const url = URL.createObjectURL(e.target.files[0]);
-    setImagePreviewUrl(url);
+    const file = e.target.files[0];
+
+    if (file) {
+      if(file.type.startsWith('image/')) {
+        setError("");
+        setImage(file);
+        setImagePreviewUrl(URL.createObjectURL(file));
+
+      } else {
+        setImage(null);
+        setImagePreviewUrl(null);
+        setError("Please upload a valid image file");
+      }
+    } 
   };
 
   const handleSubmit = async (e) => {
@@ -52,10 +63,8 @@ const Signup = () => {
             image,
             image.type
             );
-          // Setting the image name after getting the predefined url
-          const updatedUserData = { ...userData,
-          imageName: presignedUrlResponse.data.filename };
-          setUserData(updatedUserData);
+          // Setting the image name to the userdata
+          userData.imageName =  presignedUrlResponse.data.filename;
 
         } else {
           setError("Failed to upload image. Please try again later.");
@@ -94,7 +103,7 @@ const Signup = () => {
           </Link>
         </div>
         <div className={styles.right}>
-          <form className={styles.form_container} onSubmit={handleSubmit}>
+          <form className="form_container" onSubmit={handleSubmit}>
             <h1>Create Account</h1>
             <div className={styles.fields_container}>
               <input
@@ -104,7 +113,7 @@ const Signup = () => {
                 onChange={handleChange}
                 value={userData.firstName}
                 required
-                className={styles.input}
+                className="input"
               />
               <input
                 type="text"
@@ -113,7 +122,7 @@ const Signup = () => {
                 onChange={handleChange}
                 value={userData.lastName}
                 required
-                className={styles.input}
+                className="input"
               />
               <input
                 type="text"
@@ -122,7 +131,7 @@ const Signup = () => {
                 onChange={handleChange}
                 value={userData.mobileNumber}
                 required
-                className={styles.input}
+                className="input"
               />
               <input
                 type="email"
@@ -131,7 +140,7 @@ const Signup = () => {
                 onChange={handleChange}
                 value={userData.email}
                 required
-                className={styles.input}
+                className="input"
               />
               <input
                 type="password"
@@ -141,20 +150,21 @@ const Signup = () => {
                 value={userData.password}
                 required
                 minLength="8"
-                className={styles.input}
+                className="input"
               />
               <input
                 type="file"
                 name="image"
+                accept="image/*"
                 onChange={handleFileChange}
-                className={styles.input}
+                className="input"
               />
 
               {imagePreviewUrl && <img src={imagePreviewUrl} alt="Preview" className={styles.thumbnail}></img>}
             </div>
 
             <div className={styles.actions_container}>
-              {error && <div className={styles.error_msg}>{error}</div>}
+              {error && <div className="error_msg">{error}</div>}
               <button type="submit" className="green_btn">
                 Sign Up
               </button>

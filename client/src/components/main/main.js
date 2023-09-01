@@ -1,6 +1,7 @@
 import styles from "./styles.module.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { getUserData } from "../../apiCalls/mainApiCalls";
 
 const BASE_URL = "https://fragile-sneakers-bee.cyclic.app/api";
 
@@ -10,17 +11,7 @@ const Main = () => {
   useEffect(() => {
     const fetchUserDataAndImage = async () => {
       try {
-        const config = {
-          headers: {
-            "x-auth-token": localStorage.getItem('authToken'),
-          },
-        };
-
-        const userResponse = await axios.get(
-          `${BASE_URL}/users/user-data?userId=${localStorage.getItem("userId")}`,
-          config
-        );
-
+        const userResponse = await getUserData();
         setUserData(userResponse.data);
 
         if (userResponse.data?.imageName) {

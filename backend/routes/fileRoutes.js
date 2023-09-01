@@ -27,8 +27,7 @@ router.get('/get-presigned-url', async (req, res) => {
 
 
 router.post('/get-image-url', async (req, res) => {
-    const filename = req.body.imageName;
-    console.log(filename);
+    const filename = req.body.filename;
 
     if (!filename) {
         return res.status(400).send({ message: "Filename is required" });
