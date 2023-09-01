@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getPresignedUrl, uploadImage, registerUser } from "../../apiCalls/signupApiCalls";
 
 const Signup = () => {
+  const maxImageFileSize =  5 * 1024 * 1024 // in bytes
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -30,9 +31,16 @@ const Signup = () => {
 
     if (file) {
       if(file.type.startsWith('image/')) {
-        setError("");
-        setImage(file);
-        setImagePreviewUrl(URL.createObjectURL(file));
+        if(file.size <= maxImageFileSize){   // Maximum allowed file size is 5mb (size() function takes parameter in bytes)
+          setError("");
+          setImage(file);
+          setImagePreviewUrl(URL.createObjectURL(file));
+
+        } else {
+          setImage(null);
+          setImagePreviewUrl(null);
+          setError(`The image size shoul be less than ${(maxImageFileSize/(1024 * 1024))}`);
+        }
 
       } else {
         setImage(null);
