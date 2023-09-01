@@ -36,9 +36,22 @@
 	border-top: 1px solid #e5e5e5;
 }
 
+.image_container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 210px;
+	height: 210px;
+	border-radius: 50%;
+	overflow: hidden;
+	text-align: center;
+}
+
 .user_image {
 	width: 200px;
 	height: 200px;
+	line-height: 210px;
+	display: block;
 	border-radius: 50%;
 	object-fit: cover;
 	border: 2px solid #fff;
