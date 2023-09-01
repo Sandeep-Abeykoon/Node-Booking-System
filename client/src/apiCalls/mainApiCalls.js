@@ -16,7 +16,7 @@ export const getUserData = async () => {
     };
 
 
-export const getSavedImage = async (filename) => {
+export const getSavedFile = async (filename) => {
     const url = `${apiUrl}/api/files/get-image-url/`
 
     return await axios.post(

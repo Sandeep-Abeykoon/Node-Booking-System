@@ -1,9 +1,6 @@
 import styles from "./styles.module.css";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { getUserData } from "../../apiCalls/mainApiCalls";
-
-const BASE_URL = "https://fragile-sneakers-bee.cyclic.app/api";
+import { getUserData, getSavedFile } from "../../apiCalls/mainApiCalls";
 
 const Main = () => {
   const [userData, setUserData] = useState(null);
@@ -11,19 +8,16 @@ const Main = () => {
   useEffect(() => {
     const fetchUserDataAndImage = async () => {
       try {
-        const userResponse = await getUserData();
-        setUserData(userResponse.data);
+        const userDataResponse = await getUserData();
+        setUserData(userDataResponse.data);
 
-        if (userResponse.data?.imageName) {
-          const imageResponse = await axios.post(
-            `${BASE_URL}/files/get-image-url/`,
-            { imageName: userResponse.data.imageName }
-          );
-          setUserData(prevData => ({ ...prevData, imageUrl: imageResponse.data.presignedUrl }));
-        }
+        if (userDataResponse.data?.imageName) {
+          const imageUrlResponse = await getSavedFile(userDataResponse.data.imageName);
+          setUserData(prevData => ({ ...prevData, imageUrl: imageUrlResponse.data.presignedUrl }));
+        };
         
       } catch (error) {
-        console.error("Error fetching data: ", error);
+        alert("Server error");
       }
     };
 
