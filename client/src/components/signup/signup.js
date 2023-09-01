@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import styles from "./styles.module.css";
+import "../styles.common.css";
 import { Link, useNavigate } from "react-router-dom";
 import { getPresignedUrl, uploadImage, registerUser } from "../../apiCalls/signupApiCalls";
 
@@ -17,6 +18,7 @@ const Signup = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = ({ currentTarget: input }) => {
@@ -31,6 +33,8 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
 
     try {
       if (image) {
@@ -60,8 +64,7 @@ const Signup = () => {
 
       // Registering the user
       const response = await registerUser(userData);
-      alert(response.body.message);
-
+      alert(response.data.message);
       navigate("/login");
 
     } catch (error) {
@@ -69,11 +72,19 @@ const Signup = () => {
       "Internal Server error. Please try again later";
       setError(errorMessage);
     }
+
+    setLoading(false);
+
   };
 
   return (
     <div className={styles.signup_container}>
       <div className={styles.signup_form_container}>
+        {loading &&
+          <div className="overlay">
+            <div className="spinner"></div>
+          </div>
+        }
         <div className={styles.left}>
           <h1>Welcome Back</h1>
           <Link to="/login">

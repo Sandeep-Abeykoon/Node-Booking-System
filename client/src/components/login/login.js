@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import styles from "./styles.module.css";
+import "../styles.common.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -49,8 +50,8 @@ const Login = () => {
     <div className={styles.login_container}>
       <div className={styles.login_form_container}>
         {loading &&
-          <div className={styles.overlay}>
-            <div className={styles.spinner}></div>
+          <div className="overlay">
+            <div className="spinner"></div>
           </div>
         }
         <div className={styles.left}>
