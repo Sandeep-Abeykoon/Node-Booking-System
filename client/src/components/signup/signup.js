@@ -88,7 +88,7 @@ const Signup = () => {
         <div className={styles.left}>
           <h1>Welcome Back</h1>
           <Link to="/login">
-            <button type="button" className={styles.white_btn}>
+            <button type="button" className="white_btn">
               Sign in
             </button>
           </Link>
@@ -155,7 +155,7 @@ const Signup = () => {
 
             <div className={styles.actions_container}>
               {error && <div className={styles.error_msg}>{error}</div>}
-              <button type="submit" className={styles.green_btn}>
+              <button type="submit" className="green_btn">
                 Sign Up
               </button>
             </div>
