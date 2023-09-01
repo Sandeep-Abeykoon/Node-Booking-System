@@ -88,8 +88,7 @@ router.post("/login", validateUserLogin, async (req, res, next) => {
 
     jwt.sign(tokenPayload, process.env.JWT_KEY, (err, token) => {
       if (err) {
-        console.error("Error signing the token", err);
-        return res.status(500).json({ msg: "Server error" });
+        return res.status(500).json({ message: "Authentication error" });
       }
       res.status(200).json({ token, userId : user.id, message: "User logged in successfully!" });
     });

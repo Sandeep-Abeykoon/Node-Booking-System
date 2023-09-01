@@ -1,16 +1,17 @@
-import React from "react";
-import { useState } from "react";
+import React, {useState} from "react";
 import styles from "./styles.module.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [data, setData] = useState({
     email: "",
     password: "",
   });
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
@@ -19,26 +20,40 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     try {
-      const url = `https://fragile-sneakers-bee.cyclic.app/api/users/login`;
+      const url = `${apiUrl}/api/users/login`;
       const response = await axios.post(url, data);
 
       const token = response.data.token;
       const userId = response.data.userId;
 
+      // Setting up the variables in the user storage
       localStorage.setItem("authToken", token);
       localStorage.setItem("userId", userId);
 
+      //Directing to profile page after logging in
       window.location = "/";
+
     } catch (error) {
-      console.error(error);
-      setError(error.response.data.message);
+      const errorMessage = error.response?.data?.message || 
+      "Internal Server error. Please try again later";
+      setError(errorMessage);
     }
+
+    setLoading(false);
+
   };
 
   return (
     <div className={styles.login_container}>
       <div className={styles.login_form_container}>
+        {loading &&
+          <div className={styles.overlay}>
+            <div className={styles.spinner}></div>
+          </div>
+        }
         <div className={styles.left}>
           <form className={styles.form_container} onSubmit={handleSubmit}>
             <h1>Login to Your Account</h1>

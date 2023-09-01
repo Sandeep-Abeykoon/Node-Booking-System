@@ -38,6 +38,7 @@ const Signup = () => {
         );
 
         if (
+          presignedUrlResponse &&
           presignedUrlResponse.data &&
           presignedUrlResponse.data.presignedUrl
         ) 
