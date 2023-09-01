@@ -1,6 +1,7 @@
 const express = require('express');
 const computeFilename = require('../utils/computeFilename');
 const generatePresignedUrl = require('../utils/generatePresignedUrl');
+const authenticate = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -26,7 +27,7 @@ router.get('/get-presigned-url', async (req, res) => {
 });
 
 
-router.post('/get-image-url', async (req, res) => {
+router.post('/get-image-url', authenticate, async (req, res) => {
     const filename = req.body.filename;
 
     if (!filename) {
