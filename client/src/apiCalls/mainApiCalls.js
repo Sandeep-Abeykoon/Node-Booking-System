@@ -21,6 +21,11 @@ export const getSavedFile = async (filename) => {
 
     return await axios.post(
         url,
-        { filename }
+        { filename },
+        {
+            headers: {
+              "x-auth-token": localStorage.getItem('authToken'),
+            },
+          }
     );
 };

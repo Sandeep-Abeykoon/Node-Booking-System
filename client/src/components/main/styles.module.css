@@ -27,14 +27,6 @@
 	transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.white_btn:hover {
-    background-color: #f0f0f0;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    border: 2px solid #FFD700;
-    padding: 10px 0;
-}
-
-
 .user_data_container {
 	display: flex;
 	align-items: center;

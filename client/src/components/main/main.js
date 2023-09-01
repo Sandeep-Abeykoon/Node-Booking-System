@@ -35,6 +35,7 @@ const Main = () => {
   };
 
   const { _, firstName, lastName, mobileNumber, email } = userData || {};
+
   return (
     <div className={styles.main_container}>
       {loading &&
