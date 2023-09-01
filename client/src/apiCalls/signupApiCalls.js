@@ -18,7 +18,7 @@ export const uploadImage = async (presignedUrl, image, imageType) => {
 
 
 export const registerUser = async (userData) => {
-    const url =  `${apiUrl}/api.users/register`;
+    const url =  `${apiUrl}/api/users/register`;
     return axios.post(url, userData);
 };
 

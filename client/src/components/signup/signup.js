@@ -49,8 +49,10 @@ const Signup = () => {
             image.type
             );
           // Setting the image name after getting the predefined url
-          userData.imageName = presignedUrlResponse.data.filename;
-          userData.imageName = presignedUrlResponse.data.filename
+          const updatedUserData = { ...userData,
+          imageName: presignedUrlResponse.data.filename };
+          setUserData(updatedUserData);
+
         } else {
           setError("Failed to upload image. Please try again later.");
         }
@@ -58,12 +60,14 @@ const Signup = () => {
 
       // Registering the user
       const response = await registerUser(userData);
-      alert(response.data?.message);
+      alert(response.body.message);
+
       navigate("/login");
 
     } catch (error) {
-      console.error(error);
-      setError(error.response?.data.message);
+      const errorMessage = error.response?.data?.message || 
+      "Internal Server error. Please try again later";
+      setError(errorMessage);
     }
   };
 
