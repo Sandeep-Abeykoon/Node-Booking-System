@@ -74,6 +74,7 @@ const Login = () => {
               onChange={handleChange}
               value={data.password}
               required
+              minLength="8"
               className={styles.input}
             />
 
