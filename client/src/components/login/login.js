@@ -26,8 +26,7 @@ const Login = () => {
       const url = `${apiUrl}/api/users/login`;
       const response = await axios.post(url, data);
 
-      const token = response.data.token;
-      const userId = response.data.userId;
+      const { token, userId } = response.data;
 
       // Setting up the variables in the user storage
       localStorage.setItem("authToken", token);

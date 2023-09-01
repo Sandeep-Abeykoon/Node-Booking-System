@@ -9,7 +9,9 @@
 
 .signup_form_container{
     width: 900px;
-    height: 500px;
+    min-height: 500px;
+    max-height: 600px;
+    overflow-y: auto;
     display: flex;
     border-radius: 10px;
     box-shadow: 0px 3px 3px -2px rgb(000/20%),
@@ -56,6 +58,13 @@
     margin-top: 0;
 }
 
+.fields_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
 .input{
     outline: none;
     border: none;
@@ -65,6 +74,24 @@
     background-color: #edf5f3;
     margin: 5px 0;
     font: 14px;
+}
+
+.actions_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.thumbnail {
+    display: block;
+    margin-top: 10px;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 .error_msg{
@@ -89,12 +116,27 @@
     font-weight: bold;
     font-size: 14px;
     cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .green_btn{
     background-color:#222;
     color: white;
-    margin: 10px;
+    margin: 5px 0;
+}
+
+.green_btn:hover {
+    background-color: #333;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 2px solid #4CAF50;
+    padding: 10px 0;
+}
+
+.white_btn:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 2px solid #FFD700;
+    padding: 10px 0;
 }
 
 
